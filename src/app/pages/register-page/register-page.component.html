@@ -1,0 +1,40 @@
+<h1 class="page-header">Register!</h1>
+<form nz-form [formGroup]="validateForm" class="register-form" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTipUsername" nzHasFeedback>
+      <nz-input-group nzPrefixIcon="user">
+        <input type="text" nz-input formControlName="username" placeholder="Username" />
+      </nz-input-group>
+      <ng-template #errorTipUsername let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your Username!</ng-container>
+        <ng-container *ngIf="control.hasError('username')">{{(errorMessages | async)?.['username']}}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTipPassword" nzHasFeedback>
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="password" placeholder="Password" (ngModelChange)="updateConfirmValidator()" />
+      </nz-input-group>
+      <ng-template #errorTipPassword let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your Password!</ng-container>
+        <ng-container *ngIf="control.hasError('password')">{{(errorMessages | async)?.['password']}}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTipPasswordConfirm" nzHasFeedback>
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="passwordConfirm" placeholder="Password Confirm" />
+      </nz-input-group>
+      <ng-template #errorTipPasswordConfirm let-control>
+        <ng-container *ngIf="control.hasError('required')">Please confirm your Password!</ng-container>
+        <ng-container *ngIf="control.hasError('confirm')">Passwords do not match!</ng-container>
+        <ng-container *ngIf="control.hasError('passwordConfirm')">{{(errorMessages | async)?.['passwordConfirm']}}</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button class="register-form-button register-form-margin" [nzType]="'primary'">Register</button>
+  Or
+  <a routerLink="/login">Login now!</a>
+</form>

@@ -1,0 +1,33 @@
+<h1 class="page-header">All Posts</h1>
+<nz-list [nzDataSource]="(generalPostsState | async)?.generalPosts" [nzRenderItem]="item" [nzItemLayout]="'vertical'" *ngVar="(generalPostsState | async)?.loading as loading">
+    <ng-template #item let-item>
+      <nz-list-item
+        [nzContent]="loading ? ' ' : item.post.text"
+        [nzActions]="loading ? [] : [voteAction]"
+        [nzExtra]="loading ? null : extra"
+      >
+        <nz-skeleton [nzLoading]="loading" [nzActive]="true">
+          <ng-template #voteAction>
+            <i class="vote-icon" [class.vote-highlight]="item.voteStatus==='UPVOTED'" nz-icon nzType="like-o" style="margin-right: 8px;" (click)="upvotePost(item.post.id)"></i>
+            {{item.post.votes}}
+            <i class="vote-icon" [class.vote-highlight]="item.voteStatus==='DOWNVOTED'" nz-icon nzType="dislike-o" style="margin-left: 8px;" (click)="downvotePost(item.post.id)"></i>
+            <i class="vote-icon" nz-icon nzType="close-o" style="margin-left: 8px;" (click)="unvotePost(item.post.id)"></i>
+            <i *ngIf="(user | async)?.id === item.post.creator.id" class="edit" nz-icon nzType="edit-o" style="margin-left: 20px" routerLink="/edit-post/{{item.post.id}}"></i>
+          </ng-template>
+          <nz-list-item-meta [nzTitle]="nzTitle">
+            <ng-template #nzTitle>
+              <a>{{ item.post.title }}</a>
+            </ng-template>
+          </nz-list-item-meta>
+          <nz-list-item-meta [nzDescription]="nzDescription">
+            <ng-template #nzDescription>
+              <p style="font-size: smaller;">By: {{item.post.creator.username}}, On: {{item.post.createdAt | date:"medium"}}, Updated: {{item.post.updatedAt | date:"medium"}}<p>
+            </ng-template>
+          </nz-list-item-meta>
+          <ng-template #extra>
+            <img width="272" alt="logo" src="assets/russian_hacker_death_screen.png" />
+          </ng-template>
+        </nz-skeleton>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>

@@ -1,0 +1,7 @@
+<h1 class="page-header">Your Account!</h1>
+<div *ngVar="(user | async) as userProfile">
+    <h3>Id: {{userProfile?.id}}</h3>
+    <h3>Username: {{userProfile?.username}}</h3>    
+    <h3>Created At: {{userProfile?.createdAt | date:'medium'}}</h3>
+</div>
+

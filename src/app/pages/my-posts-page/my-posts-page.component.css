@@ -1,0 +1,15 @@
+nz-list-item {
+    padding: 20px;
+}
+
+.vote-icon:hover {
+    color: red;
+}
+
+.vote-highlight {
+    color: purple;
+}
+
+.edit:hover {
+    color: blue;
+}
